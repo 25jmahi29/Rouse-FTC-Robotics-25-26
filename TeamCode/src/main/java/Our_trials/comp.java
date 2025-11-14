@@ -27,7 +27,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package samples;
+package Our_trials;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
@@ -51,15 +51,14 @@ import com.qualcomm.robotcore.util.Range;
  * Remove or comment out the @Disabled line to add this OpMode to the Driver Station OpMode list
  */
 
-@TeleOp(name="Basic: Linear OpMode", group="Linear OpMode")
+@TeleOp(name="Comp", group="Linear OpMode")
 @Config
-public class BasicOpMode_Linear extends LinearOpMode {
+public class comp extends LinearOpMode {
 
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
     private DcMotor leftDrive = null;
     private DcMotor rightDrive = null;
-    private DcMotor catapultshoot = null;
     private DcMotor catapultload = null;
     @Override
     public void runOpMode() {
@@ -71,14 +70,12 @@ public class BasicOpMode_Linear extends LinearOpMode {
         // step (using the FTC Robot Controller app on the phone).
         leftDrive  = hardwareMap.get(DcMotor.class, "Left Motor");
         rightDrive = hardwareMap.get(DcMotor.class, "Right Motor");
-//        catapultshoot = hardwareMap.get(DcMotor.class, "Catapult");
         catapultload = hardwareMap.get(DcMotor.class, "Catapult");
         // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
         // Pushing the left stick forward MUST make robot go forward. So adjust these two lines based on your first test drive.
         // Note: The settings here assume direct drive on left and right wheels.  Gear Reduction or 90 Deg drives may require direction flips
         leftDrive.setDirection(DcMotor.Direction.REVERSE);
         rightDrive.setDirection(DcMotor.Direction.FORWARD);
-        catapultshoot.setDirection(DcMotor.Direction.FORWARD);
         catapultload.setDirection(DcMotor.Direction.REVERSE);
         // Wait for the game to start (driver presses START)
         waitForStart();
@@ -99,25 +96,16 @@ public class BasicOpMode_Linear extends LinearOpMode {
             // - This uses basic math to combine motions and is easier to drive straight.
             double drive = -gamepad1.left_stick_y;
             double turn  =  gamepad1.right_stick_x;
-//            double shoot = gamepad1.right_trigger;
-//            double retract = -gamepad1.left_trigger;
             leftPower    = Range.clip(drive + turn, -1.0, 1.0) ;
             rightPower   = Range.clip(drive - turn, -1.0, 1.0) ;
-//            catapultShoot = Range.clip(shoot, -1.0, 1.0);
-//            catapultLoad = Range.clip(retract, -1.0, 1.0);
-            // Tank Mode uses one stick to control each wheel.0.
-            // - This requires no math, but it is hard to drive forward slowly and keep straight.
-            // leftPower  = -gamepad1.left_stick_y ;
-            // rightPower = -gamepad1.right_stick_y ;
 
             // Send calculated power to wheels
             leftDrive.setPower(leftPower);
             rightDrive.setPower(rightPower);
-//            catapultshoot.setPower(catapultShoot);
 
-            if (gamepad1.left_trigger>.5){
+            if (gamepad2.left_trigger>.5){
                 catapultload.setPower(-1);
-            } else if (gamepad1.right_trigger>.5){
+            } else if (gamepad2.right_trigger>.5){
                 catapultload.setPower(1);
             } else {
                 catapultload.setPower(0);
