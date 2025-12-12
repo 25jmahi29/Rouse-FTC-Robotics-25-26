@@ -48,10 +48,10 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@Autonomous(name = "Auton", group = "Starterbot")
+@Autonomous(name = "Autonnew", group = "Starterbot")
 
 
-public class Auton extends LinearOpMode {
+public class Autonnew extends LinearOpMode {
 
     private ElapsedTime runtime = new ElapsedTime();
     private DcMotor leftDrive;
@@ -60,7 +60,9 @@ public class Auton extends LinearOpMode {
 
     private enum FieldSide {
         BLUE,
-        RED
+        RED,
+
+        SMALLTRI
     }
 
     private FieldSide SIDE = FieldSide.BLUE; // Defaults to Blue
@@ -104,10 +106,14 @@ public class Auton extends LinearOpMode {
                 SIDE = FieldSide.RED;
             } else if (gamepad1.x) {
                 SIDE = FieldSide.BLUE;
+            } else if (gamepad1.a) {
+                SIDE = FieldSide.SMALLTRI;
             }
 
             telemetry.addData("Press X/SQUARE", "for BLUE");
             telemetry.addData("Press B/CIRCLE", "for RED");
+            telemetry.addData("Press Press A/THE X", "for small triangle");
+
             telemetry.addData("Selected Side", SIDE);
             telemetry.update();
         }
@@ -116,16 +122,25 @@ public class Auton extends LinearOpMode {
         runtime.reset();
 
         while (opModeIsActive()) {
-            encoderDrive(DRIVE_SPEED, -10, -10, 5.0);   //Drive Backward
-            launch();
-            launch();
-            launch();
-            if (SIDE == FieldSide.BLUE) {
+            if (SIDE == FieldSide.BLUE){
+                encoderDrive(DRIVE_SPEED, -10, -9, 5.0);   //Drive Backward
+                launch();
+                launch();
+                launch();
                 encoderDrive(TURN_SPEED, 5.5, -5.5, 5.0); // Turn Right
-            } else {
-                encoderDrive(TURN_SPEED, -5.5, 5.5, 5.0); // Turn Left
+                encoderDrive(DRIVE_SPEED, 15, 15, 5.0); // Drive Forward
             }
-            encoderDrive(DRIVE_SPEED, 15, 15, 5.0); // Drive Forward
+            else if (SIDE == FieldSide.RED){
+                encoderDrive(DRIVE_SPEED, -10, -10, 5.0);   //Drive Backward
+                launch();
+                launch();
+                launch();
+                encoderDrive(TURN_SPEED, -5.5, 5.5, 5.0); // Turn Left
+                encoderDrive(DRIVE_SPEED, 15, 15, 5.0); // Drive Forward
+            }
+            else if (SIDE == FieldSide.SMALLTRI) {
+                encoderDrive(DRIVE_SPEED, -7, -7, 5.0); // MOVE FORWARD
+            }
 
             telemetry.addData("Status", "Run Time: " + runtime.toString());
             telemetry.addData("Left Encoder", leftDrive.getCurrentPosition());

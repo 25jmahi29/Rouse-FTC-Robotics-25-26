@@ -110,6 +110,7 @@ public class comp extends LinearOpMode {
             } else {
                 catapultload.setPower(0);
             }
+            sleep(20);
             // Show the elapsed game time and wheel power.
             telemetry.addData("Status", "Run Time: " + runtime.toString());
             telemetry.addData("Motors", "left (%.2f), right (%.2f)", leftPower, rightPower);
