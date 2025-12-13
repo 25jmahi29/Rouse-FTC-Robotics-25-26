@@ -85,8 +85,8 @@ public class comp extends LinearOpMode {
         while (opModeIsActive()) {
 
             // Setup a variable for each drive wheel to save power level for telemetry
-            double leftPower;
-            double rightPower;
+            double leftPower=0.0;
+            double rightPower=0.0;
             double catapultShoot;
             double catapultLoad;
             // Choose to drive using either Tank Mode, or POV Mode
@@ -96,8 +96,19 @@ public class comp extends LinearOpMode {
             // - This uses basic math to combine motions and is easier to drive straight.
             double drive = -gamepad1.left_stick_y;
             double turn  =  gamepad1.right_stick_x;
-            leftPower    = Range.clip(drive + turn, -1.0, 1.0) ;
-            rightPower   = Range.clip(drive - turn, -1.0, 1.0) ;
+            if (drive >0){
+                leftPower    = Range.clip(drive + turn, -1.0, 1.0) ;
+                rightPower   = Range.clip(drive - turn, -1.0, 1.0) ;
+            }
+            if (drive < 0){
+                leftPower    = Range.clip(drive + (turn*0.5), -1.0, 1.0) ;
+                rightPower   = Range.clip(drive - (turn*0.5), -1.0, 1.0) ;
+            }
+            else{
+                leftPower    = Range.clip(drive + turn, -1.0, 1.0) ;
+                rightPower   = Range.clip(drive - turn, -1.0, 1.0) ;
+            }
+
 
             // Send calculated power to wheels
             leftDrive.setPower(leftPower);

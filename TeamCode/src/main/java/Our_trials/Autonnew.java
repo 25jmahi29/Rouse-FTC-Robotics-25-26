@@ -123,20 +123,23 @@ public class Autonnew extends LinearOpMode {
 
         while (opModeIsActive()) {
             if (SIDE == FieldSide.BLUE){
-                encoderDrive(DRIVE_SPEED, -10, -9, 5.0);   //Drive Backward
+                encoderDrive(DRIVE_SPEED, -7, -7, 5.0);   //Drive Backward
+                encoderDrive(TURN_SPEED, 0.5, -2, 5.0); // Turn slightly left
                 launch();
                 launch();
                 launch();
-                encoderDrive(TURN_SPEED, 5.5, -5.5, 5.0); // Turn Right
-                encoderDrive(DRIVE_SPEED, 15, 15, 5.0); // Drive Forward
+                encoderDrive(TURN_SPEED, 5.5, -5.5, 6.0); // Turn Right
+                encoderDrive(DRIVE_SPEED, 10, 10, 5.0); // Drive Forward
             }
             else if (SIDE == FieldSide.RED){
-                encoderDrive(DRIVE_SPEED, -10, -10, 5.0);   //Drive Backward
+                encoderDrive(DRIVE_SPEED, -7, -7, 5.0);   //Drive Backward
+                encoderDrive(TURN_SPEED, 0.5, -2, 5.0); // Turn slightly right
+                launch();
+
                 launch();
                 launch();
-                launch();
-                encoderDrive(TURN_SPEED, -5.5, 5.5, 5.0); // Turn Left
-                encoderDrive(DRIVE_SPEED, 15, 15, 5.0); // Drive Forward
+                encoderDrive(TURN_SPEED, -5.5, 5.5, 6.0); // Turn Left
+                encoderDrive(DRIVE_SPEED, 10, 10, 5.0); // Drive Forward
             }
             else if (SIDE == FieldSide.SMALLTRI) {
                 encoderDrive(DRIVE_SPEED, -7, -7, 5.0); // MOVE FORWARD
@@ -198,7 +201,7 @@ public class Autonnew extends LinearOpMode {
             motorCatapult.setPower(RELEASE);
             sleep(1000);
             motorCatapult.setPower(WIND);
-            sleep(1000);
+            sleep(900);
             motorCatapult.setPower(RELEASE);
             sleep(150);
             motorCatapult.setPower(0);
