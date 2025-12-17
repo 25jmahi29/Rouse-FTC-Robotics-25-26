@@ -30,7 +30,6 @@
 package Our_trials;
 
 import com.acmerobotics.dashboard.config.Config;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -51,9 +50,9 @@ import com.qualcomm.robotcore.util.Range;
  * Remove or comment out the @Disabled line to add this OpMode to the Driver Station OpMode list
  */
 
-@TeleOp(name="Comp", group="Linear OpMode")
+@TeleOp(name="Tele Op", group="Linear OpMode")
 @Config
-public class comp extends LinearOpMode {
+public class teleOp extends LinearOpMode {
 
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
@@ -87,8 +86,7 @@ public class comp extends LinearOpMode {
             // Setup a variable for each drive wheel to save power level for telemetry
             double leftPower;
             double rightPower;
-            double catapultShoot;
-            double catapultLoad;
+
             // Choose to drive using either Tank Mode, or POV Mode
             // Comment out the method that's not used.  The default below is POV.
 
@@ -106,7 +104,7 @@ public class comp extends LinearOpMode {
             if (gamepad2.left_trigger>.5){
                 catapultload.setPower(-1);
             } else if (gamepad2.right_trigger>.5){
-                catapultload.setPower(1);
+                catapultload.setPower(0.9);
             } else {
                 catapultload.setPower(0);
             }
