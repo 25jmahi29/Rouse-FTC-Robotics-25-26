@@ -71,7 +71,7 @@ public class BasicOpMode_Linear extends LinearOpMode {
         // step (using the FTC Robot Controller app on the phone).
         leftDrive  = hardwareMap.get(DcMotor.class, "Left Motor");
         rightDrive = hardwareMap.get(DcMotor.class, "Right Motor");
-//        catapultshoot = hardwareMap.get(DcMotor.class, "Catapult");
+        catapultshoot = hardwareMap.get(DcMotor.class, "Catapult");
         catapultload = hardwareMap.get(DcMotor.class, "Catapult");
         // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
         // Pushing the left stick forward MUST make robot go forward. So adjust these two lines based on your first test drive.
@@ -99,12 +99,12 @@ public class BasicOpMode_Linear extends LinearOpMode {
             // - This uses basic math to combine motions and is easier to drive straight.
             double drive = -gamepad1.left_stick_y;
             double turn  =  gamepad1.right_stick_x;
-//            double shoot = gamepad1.right_trigger;
-//            double retract = -gamepad1.left_trigger;
+            double shoot = gamepad1.right_trigger;
+            double retract = -gamepad1.left_trigger;
             leftPower    = Range.clip(drive + turn, -1.0, 1.0) ;
             rightPower   = Range.clip(drive - turn, -1.0, 1.0) ;
-//            catapultShoot = Range.clip(shoot, -1.0, 1.0);
-//            catapultLoad = Range.clip(retract, -1.0, 1.0);
+            catapultShoot = Range.clip(shoot, -1.0, 7.0);
+            catapultLoad = Range.clip(retract, -1.0, 3.0);
             // Tank Mode uses one stick to control each wheel.0.
             // - This requires no math, but it is hard to drive forward slowly and keep straight.
             // leftPower  = -gamepad1.left_stick_y ;
@@ -113,20 +113,11 @@ public class BasicOpMode_Linear extends LinearOpMode {
             // Send calculated power to wheels
             leftDrive.setPower(leftPower);
             rightDrive.setPower(rightPower);
-//            catapultshoot.setPower(catapultShoot);
-
-            if (gamepad1.left_trigger>.5){
-                catapultload.setPower(-1);
-            } else if (gamepad1.right_trigger>.5){
-                catapultload.setPower(1);
-            } else {
-                catapultload.setPower(0);
-            }
+            catapultshoot.setPower(catapultShoot);
+            catapultload.setPower(catapultLoad);
             // Show the elapsed game time and wheel power.
             telemetry.addData("Status", "Run Time: " + runtime.toString());
             telemetry.addData("Motors", "left (%.2f), right (%.2f)", leftPower, rightPower);
-            telemetry.addData("triggerValue", "left (%.2f), right (%.2f)", gamepad1.left_trigger, gamepad1.right_trigger);
-
             telemetry.update();
         }
     }

@@ -30,7 +30,6 @@
 package Our_trials;
 
 import com.acmerobotics.dashboard.config.Config;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -51,7 +50,7 @@ import com.qualcomm.robotcore.util.Range;
  * Remove or comment out the @Disabled line to add this OpMode to the Driver Station OpMode list
  */
 
-@TeleOp(name="Comp", group="Linear OpMode")
+@TeleOp(name="Tele Op", group="Linear OpMode")
 @Config
 public class comp extends LinearOpMode {
 
@@ -85,10 +84,9 @@ public class comp extends LinearOpMode {
         while (opModeIsActive()) {
 
             // Setup a variable for each drive wheel to save power level for telemetry
-            double leftPower=0.0;
-            double rightPower=0.0;
-            double catapultShoot;
-            double catapultLoad;
+            double leftPower;
+            double rightPower;
+
             // Choose to drive using either Tank Mode, or POV Mode
             // Comment out the method that's not used.  The default below is POV.
 
@@ -96,19 +94,8 @@ public class comp extends LinearOpMode {
             // - This uses basic math to combine motions and is easier to drive straight.
             double drive = -gamepad1.left_stick_y;
             double turn  =  gamepad1.right_stick_x;
-            if (drive >0){
-                leftPower    = Range.clip(drive + turn, -1.0, 1.0) ;
-                rightPower   = Range.clip(drive - turn, -1.0, 1.0) ;
-            }
-            if (drive < 0){
-                leftPower    = Range.clip(drive + (turn*0.5), -1.0, 1.0) ;
-                rightPower   = Range.clip(drive - (turn*0.5), -1.0, 1.0) ;
-            }
-            else{
-                leftPower    = Range.clip(drive + turn, -1.0, 1.0) ;
-                rightPower   = Range.clip(drive - turn, -1.0, 1.0) ;
-            }
-
+            leftPower    = Range.clip(drive + turn, -1.0, 1.0) ;
+            rightPower   = Range.clip(drive - turn, -1.0, 1.0) ;
 
             // Send calculated power to wheels
             leftDrive.setPower(leftPower);
@@ -117,7 +104,7 @@ public class comp extends LinearOpMode {
             if (gamepad2.left_trigger>.5){
                 catapultload.setPower(-1);
             } else if (gamepad2.right_trigger>.5){
-                catapultload.setPower(1);
+                catapultload.setPower(0.9);
             } else {
                 catapultload.setPower(0);
             }
