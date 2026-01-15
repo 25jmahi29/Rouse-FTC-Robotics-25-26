@@ -6,10 +6,10 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
+@Autonomous(name = "Auton", group = "Starterbot")
+@Disabled
 
-@Autonomous(name = "Autonnew", group = "Starterbot")
-
-public class Autonnew extends LinearOpMode {
+public class Auton extends LinearOpMode {
 
     private ElapsedTime runtime = new ElapsedTime();
     private DcMotor leftDrive;
@@ -18,17 +18,16 @@ public class Autonnew extends LinearOpMode {
 
     private enum FieldSide {
         BLUE,
-        RED,
-        SMALLTRI
+        RED
     }
 
     private FieldSide SIDE = FieldSide.BLUE; // Defaults to Blue
 
-    private static final double WIND = 1.0; // Rubber band tension changed because of new light-colored rubber bands
+    private static final double WIND = 1.0;
     private static final double RELEASE = -1.0;
 
     static final double COUNTS_PER_MOTOR_REV = 537.6; // eg: NeveRest 19.2:1
-    static final double DRIVE_GEAR_REDUCTION = 0.6;   // 3:5 Gear ratio
+    static final double DRIVE_GEAR_REDUCTION = 1.0;   // No External Gearing
     static final double WHEEL_DIAMETER_INCHES = 3.0;  // For figuring circumference
     static final double COUNTS_PER_INCH = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
             (WHEEL_DIAMETER_INCHES * 3.1415);
@@ -63,14 +62,10 @@ public class Autonnew extends LinearOpMode {
                 SIDE = FieldSide.RED;
             } else if (gamepad1.x) {
                 SIDE = FieldSide.BLUE;
-            } else if (gamepad1.a) {
-                SIDE = FieldSide.SMALLTRI;
             }
 
             telemetry.addData("Press X/SQUARE", "for BLUE");
             telemetry.addData("Press B/CIRCLE", "for RED");
-            telemetry.addData("Press Press A/THE X", "for small triangle");
-
             telemetry.addData("Selected Side", SIDE);
             telemetry.update();
         }
@@ -79,25 +74,16 @@ public class Autonnew extends LinearOpMode {
         runtime.reset();
 
         while (opModeIsActive()) {
-            if (SIDE == FieldSide.BLUE){
-                encoderDrive(DRIVE_SPEED, -7, -7, 5.0);   //Drive Backward
-                launch();
-                launch();
-                launch();
-                encoderDrive(TURN_SPEED, 1.5, -1.5, 1.0); // Turn Right
-                //encoderDrive(DRIVE_SPEED, 7, 7, 5.0); // Drive Forward
+            encoderDrive(DRIVE_SPEED, -10, -10, 5.0);   //Drive Backward
+            launch();
+            launch();
+            launch();
+            if (SIDE == FieldSide.BLUE) {
+                encoderDrive(TURN_SPEED, 5.5, -5.5, 5.0); // Turn Right
+            } else {
+                encoderDrive(TURN_SPEED, -5.5, 5.5, 5.0); // Turn Left
             }
-            else if (SIDE == FieldSide.RED){
-                encoderDrive(DRIVE_SPEED, -7, -7, 5.0);   //Drive Backward
-                launch();
-                launch();
-                launch();
-                encoderDrive(TURN_SPEED, -1.5, 1.5, 5.0); // Turn Left
-                encoderDrive(DRIVE_SPEED, 4, 4, 5.0); // Drive Forward
-            }
-            else if (SIDE == FieldSide.SMALLTRI) {
-                encoderDrive(DRIVE_SPEED, -12, -12, 5.0); // MOVE FORWARD
-            }
+            encoderDrive(DRIVE_SPEED, 15, 15, 5.0); // Drive Forward
 
             telemetry.addData("Status", "Run Time: " + runtime.toString());
             telemetry.addData("Left Encoder", leftDrive.getCurrentPosition());
@@ -157,7 +143,7 @@ public class Autonnew extends LinearOpMode {
             motorCatapult.setPower(WIND);
             sleep(1000);
             motorCatapult.setPower(RELEASE);
-            sleep(100);
+            sleep(150);
             motorCatapult.setPower(0);
         }
     }
