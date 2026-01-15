@@ -82,7 +82,7 @@ public class RobotTeleopMecanumFieldRelativeDrive extends OpMode {
         backRightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         imu = hardwareMap.get(IMU.class, "imu");
-        // This needs to be changed to match the orientation on your robot
+        // This needs to be changed to match the orientation of the Control Hub on your robot
         RevHubOrientationOnRobot.LogoFacingDirection logoDirection =
                 RevHubOrientationOnRobot.LogoFacingDirection.UP;
         RevHubOrientationOnRobot.UsbFacingDirection usbDirection =

@@ -2,6 +2,7 @@ package Our_trials;
 
 
 import com.acmerobotics.dashboard.config.Config;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -10,6 +11,7 @@ import com.qualcomm.robotcore.util.Range;
 
 @TeleOp(name="Catapult Tests", group="Linear OpMode")
 @Config
+@Disabled
 public class catapultTests extends LinearOpMode {
     private ElapsedTime runtime = new ElapsedTime();
     private DcMotor catapultshoot = null;
