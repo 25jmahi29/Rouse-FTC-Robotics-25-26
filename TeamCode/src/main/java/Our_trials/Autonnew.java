@@ -1,3 +1,4 @@
+
 package Our_trials;
 
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
@@ -80,7 +81,7 @@ public class Autonnew extends LinearOpMode {
 
         while (opModeIsActive()) {
             if (SIDE == FieldSide.BLUE){
-                encoderDrive(DRIVE_SPEED, -7, -7, 5.0);   //Drive Backward
+                encoderDrive(DRIVE_SPEED, -6, -6, 5.0);   //Drive Backward
                 launch();
                 launch();
                 launch();
